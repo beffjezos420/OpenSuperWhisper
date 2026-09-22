@@ -1096,6 +1096,15 @@ struct TranscriptionView: View {
         return Text(transcribedText)
     }
     
+    private var wordCount: Int {
+        guard !transcribedText.isEmpty else { return 0 }
+        return transcribedText.split(whereSeparator: { $0.isWhitespace }).count
+    }
+    
+    private var charCount: Int {
+        transcribedText.count
+    }
+    
     private func computeHighlighting() {
         computeTask?.cancel()
         
@@ -1170,6 +1179,26 @@ struct TranscriptionView: View {
                 }
             }
             .padding(8)
+
+            if !transcribedText.isEmpty {
+                HStack(spacing: 12) {
+                    HStack(spacing: 3) {
+                        Image(systemName: "text.word.spacing")
+                            .font(.caption2)
+                        Text("\(wordCount) words")
+                            .font(.caption2)
+                    }
+                    HStack(spacing: 3) {
+                        Image(systemName: "character.cursor.ibeam")
+                            .font(.caption2)
+                        Text("\(charCount) chars")
+                            .font(.caption2)
+                    }
+                    Spacer()
+                }
+                .foregroundColor(.secondary)
+                .padding(.horizontal, 8)
+            }
 
             if hasMoreLines {
                 Button(action: { isExpanded.toggle() }) {

@@ -1009,9 +1009,23 @@ struct SettingsView: View {
 
                 // Initial Prompt
                 VStack(alignment: .leading, spacing: 16) {
-                    Text("Initial Prompt")
-                        .font(.headline)
-                        .foregroundColor(.primary)
+                    HStack {
+                        Text("Initial Prompt")
+                            .font(.headline)
+                            .foregroundColor(.primary)
+                        Spacer()
+                        if !viewModel.initialPrompt.isEmpty {
+                            Button(action: {
+                                viewModel.initialPrompt = ""
+                            }) {
+                                Label("Clear", systemImage: "xmark.circle")
+                                    .font(.subheadline)
+                            }
+                            .buttonStyle(.plain)
+                            .foregroundColor(.secondary)
+                            .help("Clear the initial prompt")
+                        }
+                    }
                     
                     VStack(alignment: .leading, spacing: 8) {
                         TextEditor(text: $viewModel.initialPrompt)

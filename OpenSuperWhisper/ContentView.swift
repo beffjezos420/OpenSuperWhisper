@@ -916,6 +916,14 @@ struct RecordingRow: View {
                     }
                     .font(.caption)
                     .foregroundColor(.secondary)
+
+                    if let sourceFileName = recording.sourceFileName {
+                        Text(sourceFileName)
+                            .font(.caption2)
+                            .foregroundColor(Color(.tertiaryLabelColor))
+                            .lineLimit(1)
+                            .truncationMode(.middle)
+                    }
                 }
                 
                 if isRegenerating {
